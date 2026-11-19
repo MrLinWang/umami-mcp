@@ -1,0 +1,38 @@
+{
+  "name": "mrlinwang-umami-mcp",
+  "version": "0.1.0",
+  "mcpName": "io.github.MrLinWang/umami-mcp",
+  "description": "Read-only Umami analytics for self-hosted sites: traffic, referrers, sessions and events.",
+  "type": "module",
+  "bin": {
+    "mrlinwang-umami-mcp": "src/server.js"
+  },
+  "files": [
+    "src/server.js",
+    "src/umami.js",
+    "server.json",
+    ".env.example"
+  ],
+  "keywords": [
+    "mcp",
+    "umami",
+    "analytics",
+    "model-context-protocol"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "engines": {
+    "node": ">=18.20"
+  },
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "@js-temporal/polyfill": "0.5.1",
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "dotenv": "17.4.2",
+    "zod": "4.4.3"
+  }
+}

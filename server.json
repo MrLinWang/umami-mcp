@@ -1,0 +1,44 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.MrLinWang/umami-mcp",
+  "title": "Umami Analytics (Read-only)",
+  "description": "Read-only Umami analytics for self-hosted sites: traffic, referrers, sessions and events.",
+  "version": "0.1.0",
+  "websiteUrl": "https://www.npmjs.com/package/mrlinwang-umami-mcp",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "mrlinwang-umami-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "UMAMI_URL",
+          "description": "Base URL of your self-hosted Umami instance, such as https://analytics.example.com.",
+          "format": "string",
+          "isRequired": true
+        },
+        {
+          "name": "UMAMI_API_TOKEN",
+          "description": "Umami API key or login token with access to the sites you want to query.",
+          "format": "string",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "UMAMI_WEBSITE_ID",
+          "description": "Optional default Umami website UUID.",
+          "format": "string"
+        },
+        {
+          "name": "UMAMI_TIMEZONE",
+          "description": "Optional IANA timezone, such as Asia/Shanghai. Defaults to UTC.",
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}
