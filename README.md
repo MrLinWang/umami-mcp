@@ -39,6 +39,44 @@
 
 遇到 HTTP 401 时，检查令牌是否过期以及账号是否有目标网站或团队的访问权限。支持 API key 的 Umami 实例可以从账号设置创建 API key。 [Umami 认证文档](https://docs.umami.is/docs/api/authentication)
 
+## 获取令牌
+
+项目提供 `scripts/get-umami-token.py`，只需要 Python 3 标准库。它支持密码输入、环境变量读取密码、双重验证，以及通过登录令牌创建长期 API key。默认只将原始令牌输出到标准输出。
+
+交互式登录并输出登录令牌：
+
+```bash
+python3 scripts/get-umami-token.py --url https://analytics.example.com
+```
+
+从环境变量读取密码，避免密码出现在命令行中：
+
+```bash
+read -r -s -p "Umami password: " UMAMI_PASSWORD
+export UMAMI_PASSWORD
+python3 scripts/get-umami-token.py \
+  --url https://analytics.example.com --username your-username --password-env UMAMI_PASSWORD
+unset UMAMI_PASSWORD
+```
+
+创建长期 API key，并写入指定配置文件。脚本会创建配置文件，或更新其中的 `UMAMI_API_TOKEN`，保留其他配置，并将文件权限设为 `0600`。已有 `UMAMI_URL` 必须与本次登录的实例一致：
+
+```bash
+python3 scripts/get-umami-token.py --url https://analytics.example.com \
+  --create-key --key-name mcp --env-file .env
+```
+
+也可以复用已有的登录令牌或 API key，不重复登录：
+
+```bash
+python3 scripts/get-umami-token.py --url https://analytics.example.com --token-env UMAMI_TOKEN \
+  --create-key --key-name mcp --env-file .env
+```
+
+脚本也可从环境变量 `UMAMI_URL` 读取实例地址。启用 2FA 时会交互式请求验证码或备用码；自动化登录可通过 `--otp` 传入六位验证码。
+
+未指定 `--create-key` 时返回的是登录令牌，也可作为 MCP 的 `UMAMI_API_TOKEN` 使用。`--create-key` 创建可独立吊销的长期 API key，需要实例支持该接口，完整密钥只在创建时返回一次。交互提示输出到标准错误，密码不回显；未使用 `--env-file` 时，标准输出只包含原始凭据。在 Umami Cloud 上，请从控制台创建 API key，登录令牌流程仅适用于自托管实例。
+
 ## 工具
 
 | 工具 | 返回内容 |

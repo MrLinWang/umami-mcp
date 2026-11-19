@@ -10,6 +10,7 @@
   "files": [
     "src/server.js",
     "src/umami.js",
+    "scripts/get-umami-token.py",
     "server.json",
     ".env.example"
   ],
